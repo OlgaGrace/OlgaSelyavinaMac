@@ -4,8 +4,12 @@ package com.tr.example.appManager;
 import com.tr.example.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-public class GroupHelper extends HelperBase{
+import java.util.ArrayList;
+import java.util.List;
+
+public class GroupHelper extends HelperBase {
 
     public GroupHelper(WebDriver driver) {
         super(driver);
@@ -64,5 +68,23 @@ public class GroupHelper extends HelperBase{
                 .withFooter("footer"));
         submitGroupCreation(By.name("submit"));
         returnToGroupPage();
+    }
+
+    public void selectGroupByIndex(int i) {
+        driver.findElements(By.name("selected[]")).get(i).click();
+    }
+
+
+    public List<GroupData> getGroupList() {
+        List<GroupData> groups = new ArrayList<>();
+        List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
+        for (WebElement element : elements) {
+            String name = element.getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            GroupData group = new GroupData().withId(id).withName(name);
+            groups.add(group);
+
+        }
+        return groups;
     }
 }

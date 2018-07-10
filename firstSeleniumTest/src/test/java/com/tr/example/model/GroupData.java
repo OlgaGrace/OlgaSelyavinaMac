@@ -3,10 +3,19 @@ package com.tr.example.model;
 import java.util.Objects;
 
 public class GroupData {
+    private int id;
     private String name;
     private String header;
     private String footer;
 
+    public int getId() {
+        return id;
+    }
+
+    public GroupData withId(int id) {
+        this.id = id;
+        return this;
+    }
 
     public GroupData withName(String name) {
         this.name = name;
@@ -38,7 +47,8 @@ public class GroupData {
     @Override
     public String toString() {
         return "GroupData{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 
@@ -47,13 +57,14 @@ public class GroupData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupData groupData = (GroupData) o;
-        return Objects.equals(name, groupData.name);
+        return id == groupData.id &&
+                Objects.equals(name, groupData.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name);
+        return Objects.hash(id, name);
     }
 }
 
